@@ -6,9 +6,9 @@ This container is designed to run on alternate platforms (eg. ARM/ARM64) and to 
 ## Enviroment Variables
 | Name | Default | Description |
 |------|---------|-------------|
-| NETINSTALL_ADDR | 192.168.88.1 | Client IP Address for Netinstall to assign |
+| NETINSTALL_ADDR | `192.168.88.1` | Client IP Address for Netinstall to assign |
 | NETINSTALL_ARGS | `<null>` | Allows specifying additional arguments such as '-r' to reset config (https://help.mikrotik.com/docs/display/ROS/Netinstall#Netinstall-InstructionsforLinux)
-| NETINSTALL_ARCH | arm64 | CPU Architecture to use when selecting npk |
+| NETINSTALL_ARCH | `arm64` | CPU Architecture to use when selecting npk |
 | NETINSTALL_VER | `7.14.1` | RouterOS version to use when selecting npk |
 | NETINSTALL_PKGS | `routeros` | Packages to install seperated by space (eg. routeros container) Do NOT include anything but the package name |
 
