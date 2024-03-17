@@ -7,12 +7,10 @@ This container is designed to run on alternate platforms (eg. ARM/ARM64) and to 
 | Name | Default | Description |
 |------|---------|-------------|
 | NETINSTALL_ADDR | 192.168.88.1 | Client IP Address for Netinstall to assign |
-| NETINSTALL_RESET | `<null>` | Add `-r` to Netinstall arguments (https://help.mikrotik.com/docs/display/ROS/Netinstall#Netinstall-InstructionsforLinux)
-| NETINSTALL_ARCH | mipsbe | CPU Architecture to use when selecting npk (Optional) |
-| LOAD_VERSION | `<null>` | RouterOS version to use when selecting npk (Optional) |
-| NETINSTALL_NPK | `routeros-${NETINSTALL_ARCH}-${LOAD_VERSION}.npk"` | NPK for Netinstall to use |
-
-*Note:* The `-k` and `-s` netinstall arguments are not implemented yet
+| NETINSTALL_ARGS | `<null>` | Allows specifying additional arguments such as '-r' to reset config (https://help.mikrotik.com/docs/display/ROS/Netinstall#Netinstall-InstructionsforLinux)
+| NETINSTALL_ARCH | arm64 | CPU Architecture to use when selecting npk |
+| NETINSTALL_VER | `7.14.1` | RouterOS version to use when selecting npk |
+| NETINSTALL_PKGS | `routeros` | Packages to install seperated by space (eg. routeros container) Do NOT include anything but the package name |
 
 ## Usage on RouterOS v7
 With the implementation of containers in ROSv7, we can now enjoy a netinstall experience from another Mikrotik
@@ -20,7 +18,7 @@ With the implementation of containers in ROSv7, we can now enjoy a netinstall ex
 Testing has been completed with a RB4011 (v7.6b8) running the container to flash a RB2011
 
 ### Steps
-The below steps will create a container linking to `ether5`, and set netinstall to load the `routeros-mipsbe-6.48.6.npk` NPK file
+The below steps will create a container linking to `ether5`, and set netinstall to perform a full reset/recovery of RouterOS v7.14.1 for arm64 with the container package 
 
 1. Enable containers and install package (refer wiki)
 2. Create folder `images` under `disk1`
@@ -44,7 +42,10 @@ The below steps will create a container linking to `ether5`, and set netinstall 
     ```
 8. Create enviroment set, and specify npk file to use
     ```
-    /container envs add key=NETINSTALL_NPK name=NETINSTALL value=routeros-mipsbe-6.48.6.npk
+    /container envs add key=NETINSTALL_ARCH name=NETINSTALL value=arm64
+    /container envs add key=NETINSTALL_VER name=NETINSTALL value=7.14.1
+    /container envs add key=NETINSTALL_PKGS name=NETINSTALL value="routeros container"
+    /container envs add key=NETINSTALL_ARGS name=NETINSTALL value="-r -b"
     ```
 9. Create container
     ```
@@ -53,6 +54,11 @@ The below steps will create a container linking to `ether5`, and set netinstall 
 
 ## Usage with Podman
 >TODO
+#### Allow containers to bind to lower ports
+```bash
+sudo sh -c "echo 0 > /proc/sys/net/ipv4/ip_unprivileged_port_start"
+```
+
 
 ## Usage with Docker
 Due to limitations with Docker, the container can only work via the `--network=host` network parameter, as such this is only useful on Linux as this driver is not available for Windows/MacOS

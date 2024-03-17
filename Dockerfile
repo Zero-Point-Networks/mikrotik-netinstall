@@ -1,5 +1,5 @@
 #Define our Netinstall Version
-ARG NET_VERSION=7.5
+ARG NET_VERSION=7.14.1
 
 # Download the netinstall files
 FROM alpine:latest AS build
@@ -29,7 +29,7 @@ RUN apk add --clean-protected --no-cache \
 COPY --from=qemu /app/qemu-i386-static .
 
 ## Copy out the netinstall binary
-COPY --from=build /app .
+COPY --from=build /app/netinstall-cli ./netinstall-cli
 
 ## Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
