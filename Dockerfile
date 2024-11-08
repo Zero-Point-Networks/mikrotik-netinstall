@@ -1,5 +1,5 @@
 #Define our Netinstall Version
-ARG NET_VERSION=7.14.1
+ARG NET_VERSION=7.16.1
 
 # Download the netinstall files
 FROM alpine:latest AS build
