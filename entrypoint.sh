@@ -53,10 +53,10 @@ else
     fi
 fi
 
-  # Check and build list of brandingpackages
+  # Check and build list of branding packages
     DPK_ARG=""
     for PKG in $NETINSTALL_BRANDING; do
-        NPK_FILE="$NPK_DIR$PKG.dpk"
+        DPK_FILE="$NPK_DIR$PKG.dpk"
         if test -f $DPK_FILE; then
             echo "[INFO] Found $DPK_FILE"
             DPK_ARG="$DPK_ARG$DPK_FILE ";
