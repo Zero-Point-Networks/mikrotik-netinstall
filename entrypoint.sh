@@ -64,7 +64,7 @@ fi
             >&2 echo "[WARNING] Unable to find $DPK_FILE skipping"
         fi
     done
-else
+    
     echo "Using NETINSTALL_NPK logic"
     if test -f $NETINSTALL_DPK; then
         NDK_ARG=$NETINSTALL_DPK
