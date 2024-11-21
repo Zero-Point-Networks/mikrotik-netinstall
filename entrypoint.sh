@@ -53,8 +53,29 @@ else
     fi
 fi
 
+ # Check and build list of packages
+    DPK_ARG=""
+    for PKG in $NETINSTALL_BRANDING; do
+        DPK_FILE="$NPK_DIR$PKG-$ARCH_VER_NAME.dpk"
+        if test -f $DPK_FILE; then
+            echo "[INFO] Found $DPK_FILE"
+            DPK_ARG="$DPK_ARG$NPK_FILE ";
+        else
+            >&2 echo "[WARNING] Unable to find $DPK_FILE skipping"
+        fi
+    done
+else
+    echo "Using NETINSTALL_NPK logic"
+    if test -f $NETINSTALL_DPK; then
+        NDK_ARG=$NETINSTALL_DPK
+    else
+        echo "Unable to find $NETINSTALL_DPK"
+        exit 0
+    fi
+fi
+
 # Build netinstall command
-NETINSTALL_CMD="/app/netinstall-cli $NETINSTALL_ARGS -a $NETINSTALL_ADDR $NPK_ARG"
+NETINSTALL_CMD="/app/netinstall-cli $NETINSTALL_ARGS -a $NETINSTALL_ADDR $NPK_ARG $DPK_ARG"
 
 # Detect host arch and execute netinstall
 if [[ $(uname -m) =~ (i[1-6]86|amd64) ]]; then
