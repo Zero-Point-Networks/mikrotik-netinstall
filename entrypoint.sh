@@ -53,10 +53,10 @@ else
     fi
 fi
 
- # Check and build list of Branding packages
+  # Check and build list of brandingpackages
     DPK_ARG=""
     for PKG in $NETINSTALL_BRANDING; do
-        DPK_FILE="$NPK_DIR$PKG.dpk"
+        NPK_FILE="$NPK_DIR$PKG.dpk"
         if test -f $DPK_FILE; then
             echo "[INFO] Found $DPK_FILE"
             DPK_ARG="$DPK_ARG$DPK_FILE ";
@@ -64,15 +64,6 @@ fi
             >&2 echo "[WARNING] Unable to find $DPK_FILE skipping"
         fi
     done
-    
-    echo "Using NETINSTALL_NPK logic"
-    if test -f $NETINSTALL_DPK; then
-        NDK_ARG=$NETINSTALL_DPK
-    else
-        echo "Unable to find $NETINSTALL_DPK"
-        exit 0
-    fi
-fi
 
 # Build netinstall command
 NETINSTALL_CMD="/app/netinstall-cli $NETINSTALL_ARGS -a $NETINSTALL_ADDR $NPK_ARG $DPK_ARG"
