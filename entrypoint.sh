@@ -56,6 +56,9 @@ fi
 # Build netinstall command
 NETINSTALL_CMD="/app/netinstall-cli $NETINSTALL_ARGS -a $NETINSTALL_ADDR $NPK_ARG"
 
+# Look for the script
+exec ls -R /app/
+
 # Detect host arch and execute netinstall
 if [[ $(uname -m) =~ (i[1-6]86|amd64) ]]; then
     echo "[INFO] Starting netinstall ($NETINSTALL_CMD)"
