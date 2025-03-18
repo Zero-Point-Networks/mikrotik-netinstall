@@ -35,6 +35,9 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Convert repository owner to lowercase
+        run: echo "GHCR_OWNER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       # Step 5: Build and push the Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
@@ -43,4 +46,4 @@ jobs:
           platforms: linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/mikrotik-netinstall:latest
+            ghcr.io/${{ env.GHCR_OWNER }}/mikrotik-netinstall:latest
