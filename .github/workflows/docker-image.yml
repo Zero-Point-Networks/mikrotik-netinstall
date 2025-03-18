@@ -45,5 +45,6 @@ jobs:
           context: .
           platforms: linux/arm64
           push: true
+          no-cache: true
           tags: |
             ghcr.io/${{ env.GHCR_OWNER }}/mikrotik-netinstall:latest
